@@ -2,28 +2,33 @@ FROM python:3.13-slim-trixie
 
 ENV WEEWX_VERSION="5.2.0"
 ENV REQUEST_VERSION="2.32.5"
-ENV LANG="sk_SK.UTF-8"
-ENV TZ="Europe/Bratislava"
+ENV LANG="en_US.UTF-8"
+ENV LC_ALL=${LANG}
+ENV TZ="Etc/UTC"
 
 # Setup workdir and volume
 WORKDIR /root
-RUN mkdir /root/weewx-data
-RUN mkdir /root/weewx-html
+RUN mkdir -p /root/weewx-data /root/weewx-html
+
+VOLUME /root/weewx-data
+VOLUME /root/weewx-html
 
 # update/install required packages
 RUN apt update &&\
-    apt install python3-pip python3-venv locales wget unzip -y &&\
+    apt install -y python3-venv locales wget unzip &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
     rm -rf /var/lib/{apt,dpkg,cache,log}/
 
-# enable locale
-RUN sed -i "/${LANG}/s/^# //g" /etc/locale.gen && locale-gen
-ENV LC_ALL=${LANG}
-
 # install weewx using pip
-RUN python3 -m venv ~/weewx-venv
-RUN . ~/weewx-venv/bin/activate
-RUN python3 -m pip install weewx==${WEEWX_VERSION} requests==${REQUEST_VERSION}
+RUN python3 -m venv /root/weewx-venv && \
+    /root/weewx-venv/bin/pip install --upgrade pip && \
+    /root/weewx-venv/bin/pip install "weewx==${WEEWX_VERSION}" "requests==${REQUEST_VERSION}"
 
+# copy entrypoint and make executable
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY logging.conf /root/logging.conf
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD [ "weewxd" ]

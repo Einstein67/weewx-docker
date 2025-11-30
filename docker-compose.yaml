@@ -1,0 +1,20 @@
+services:
+    weewx:
+        build: .
+        container_name: weewx
+        restart: unless-stopped
+        environment:
+           - LANG=sk_SK.UTF-8
+           - LC_ALL=sk_SK.UTF-8
+           - TZ=Europe/Bratislava
+        volumes:
+            - ./data:/root/weewx-data:rw
+            - ./html:/root/weewx-html:rw
+
+    nginx:
+        image: nginx
+        restart: unless-stopped
+        volumes:
+            - ./html:/usr/share/nginx/html:ro
+        ports:
+            - '8080:80'

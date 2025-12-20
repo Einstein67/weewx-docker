@@ -1,5 +1,6 @@
 services:
     weewx:
+        #image: tfilo/weewx:latest
         build: .
         container_name: weewx
         restart: unless-stopped

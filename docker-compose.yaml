@@ -2,7 +2,7 @@ services:
     weewx:
         #image: tfilo/weewx:latest
         build: .
-        image: weewx:5.3
+        image: weewx:5.3.1
         container_name: weewx
         restart: unless-stopped
         environment:

@@ -5,17 +5,17 @@ services:
         container_name: weewx
         restart: unless-stopped
         environment:
-           - LANG=sk_SK.UTF-8
-           - LC_ALL=sk_SK.UTF-8
-           - TZ=Europe/Bratislava
+           - LANG=de_DE.UTF-8
+           - LC_ALL=de_DE.UTF-8
+           - TZ=Europe/Vienna
         volumes:
             - ./data:/root/weewx-data:rw
             - ./html:/root/weewx-html:rw
 
-    nginx:
-        image: nginx
-        restart: unless-stopped
-        volumes:
-            - ./html:/usr/share/nginx/html:ro
-        ports:
-            - '8080:80'
+#    nginx:
+#        image: nginx
+#        restart: unless-stopped
+#        volumes:
+#            - ./html:/usr/share/nginx/html:ro
+#        ports:
+#            - '8080:80'

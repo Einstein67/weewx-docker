@@ -1,4 +1,4 @@
-FROM python:3.13-slim-trixie
+FROM python:3.14-slim-trixie
 
 ENV WEEWX_VERSION="5.3.1"
 ENV REQUEST_VERSION="2.32.5"

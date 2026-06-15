@@ -23,7 +23,8 @@ RUN apt update &&\
 # install weewx using pip
 RUN python3 -m venv /root/weewx-venv && \
     /root/weewx-venv/bin/pip install --upgrade pip && \
-    /root/weewx-venv/bin/pip install --no-cache-dir "weewx==${WEEWX_VERSION}" "requests==${REQUEST_VERSION}"
+#    /root/weewx-venv/bin/pip install --no-cache-dir "weewx==${WEEWX_VERSION}" "requests==${REQUEST_VERSION}"
+    /root/weewx-venv/bin/pip install --no-cache-dir "weewx==${WEEWX_VERSION}" "requests==${REQUEST_VERSION}" "paho-mqtt"
 
 # copy entrypoint and make executable
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh

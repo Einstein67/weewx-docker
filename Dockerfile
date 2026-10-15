@@ -19,8 +19,9 @@ RUN apt update &&\
     apt install -y python3-venv locales wget unzip &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
-    rm -rf /var/lib/{apt,dpkg,cache,log}/
-
+#    rm -rf /var/lib/{apt,dpkg,cache,log}/
+    rm -rf /var/lib/apt/lists/*
+    
 # install weewx using pip
 RUN python3 -m venv /root/weewx-venv && \
     /root/weewx-venv/bin/pip install --upgrade pip && \

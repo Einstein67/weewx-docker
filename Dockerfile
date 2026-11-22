@@ -1,6 +1,6 @@
 FROM python:3-slim-trixie
 
-ENV WEEWX_VERSION="5.5.2"
+ENV WEEWX_VERSION="5.6.0"
 ENV REQUEST_VERSION="2.34.2"
 ENV LANG="en_US.UTF-8"
 ENV LC_ALL=${LANG}
@@ -19,7 +19,7 @@ RUN apt update &&\
     apt install -y python3-venv locales wget unzip &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
-#    rm -rf /var/lib/{apt,dpkg,cache,log}/
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
     rm -rf /var/lib/apt/lists/*
     
 # install weewx using pip

@@ -15,17 +15,14 @@ VOLUME /root/weewx-html
 
 # update/install required packages
 RUN apt update &&\
-#    apt install -y python3-venv locales wget unzip build-essential &&\
-    apt install -y python3-venv locales wget unzip &&\
+    apt install -y python3-venv locales wget unzip build-essential &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
-#    rm -rf /var/lib/{apt,dpkg,cache,log,lists}/
-    rm -rf /var/lib/apt/lists/*
-    
+    rm -rf /var/lib/{apt,dpkg,cache,log,lists}/
+
 # install weewx using pip
 RUN python3 -m venv /root/weewx-venv && \
     /root/weewx-venv/bin/pip install --upgrade pip && \
-#    /root/weewx-venv/bin/pip install --no-cache-dir "weewx==${WEEWX_VERSION}" "requests==${REQUEST_VERSION}"
     /root/weewx-venv/bin/pip install --no-cache-dir "weewx==${WEEWX_VERSION}" "requests==${REQUEST_VERSION}" "paho-mqtt"
 
 # copy entrypoint and make executable

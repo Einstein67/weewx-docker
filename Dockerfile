@@ -1,4 +1,4 @@
-FROM python:3-slim-trixie
+FROM python:3.13-slim-trixie
 
 ENV WEEWX_VERSION="5.6.0"
 ENV REQUEST_VERSION="2.34.2"
@@ -15,7 +15,8 @@ VOLUME /root/weewx-html
 
 # update/install required packages
 RUN apt update &&\
-    apt install -y python3-venv locales wget unzip build-essential &&\
+    apt install -y python3-venv locales wget unzip &&\
+#	apt install -y python3-venv locales wget unzip build-essential &&\
     apt-get clean autoclean &&\
     apt-get autoremove --yes &&\
     rm -rf /var/lib/{apt,dpkg,cache,log,lists}/
